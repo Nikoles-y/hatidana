@@ -13,4 +13,8 @@ class Donatur extends Model
     protected $fillable = [
         'name', 'notes', 'fundraising_Id', 'total_amount', 'is_paid', 'proof',
     ];
+
+    public function fundraising(){
+        return $this->belongsTo(Fundraising::class);
+    }
 }
