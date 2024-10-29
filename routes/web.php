@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonaturController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundraiserController;
 use App\Http\Controllers\FundraisingController;
 use App\Http\Controllers\FundraisingPhaseController;
 use App\Http\Controllers\FundraisingWithdrawalController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,8 +29,22 @@ Route::middleware('auth')->group(function () {
         Route::resource('fundraisers', FundraiserController::class)->middleware('role:owner')->except('index');
         Route::get('fundraisers', [FundraiserController::class , 'index'])->name('fundraisers.index');
         Route::resource('fundraising_withdrawals', FundraisingWithdrawalController::class)->middleware('role:owner|fundraiser');
+        Route::post('fundraising_withdrawals/request/{fundraising:id}', [FundraisingWithdrawalController::class, 'store'])
+        ->middleware('role:fundraiser')
+        ->name('fundraising_withdrawal.store');
         Route::resource('fundraising_phases', FundraisingPhaseController::class)->middleware('role:owner|fundraiser');
+        Route::post('fundraising_phases/update/{fundraising:id}', [FundraisingPhaseController::class, 'store'])
+        ->middleware('role:fundraiser')
+        ->name('fundraising_phases.store');
+
         Route::resource('fundraisings', FundraisingController::class)->middleware('role:owner|fundraiser');
+        Route::post('fundraisings/active/{fundraising:id}', [FundraisingController::class, 'activate_fundraising'])
+        ->middleware('role:fundraiser')
+        ->name('fundraising_withdrawal.activate_fundraising');
+
+        Route::post('/fundraiser/apply', [DashboardController::class, 'my_withdrawals'])->name('my-withdrawals');
+        Route::post('/my-withdrawals/details/{fundraisingWithdrawal}', [DashboardController::class, 'my_withdrawals'])->name('my-withdrawals.details');
+    
     });
 });
 
