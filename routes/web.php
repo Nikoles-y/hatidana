@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::prefix('admin')->name('admin')->group(function() {
+    Route::prefix('admin')->name('admin.')->group(function() {
         Route::resource('categories', CategoryController::class)->middleware('role:owner');
         Route::resource('donaturs', DonaturController::class)->middleware('role:owner');
         Route::resource('fundraisers', FundraiserController::class)->middleware('role:owner')->except('index');
