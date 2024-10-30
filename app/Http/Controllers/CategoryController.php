@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -74,10 +75,28 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateCategoryRequest $request, Category $category)
     {
         //
+        DB::transaction(function () use ($request, $category) {
+            $validated = $request->validated();
+            if($request->hasFile('icon')){
+                $iconPath= $request->file('icon')->store('icons', 'public');
+                $validated['icon'] = $iconPath;
+            } else {
+                $iconPath = 'images/icon-category-default.png';
+            }
+
+            $validated['slug'] = Str::slug($validated['name']);
+
+
+            $category->update($validated);
+            
+        });
+
+        return redirect()->route('admin.categories.index');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -85,5 +104,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        DB::beginTransaction();
+        try{
+            $category->delete();
+            DB::commit();
+            return redirect()->route('admin.categories.index');
+        } catch (\Exception $e){
+            DB::rollBack();
+            return redirect()->route('admin.categories.index');
+        }
     }
 }
