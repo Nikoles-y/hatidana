@@ -83,18 +83,20 @@ class FundraisingController extends Controller
      * Display the specified resource.
      */
     public function show(Fundraising $fundraising)
-    {
-        //
-        $totalDonations= $fundraising->totalReachedAmount();
-        $goalReached = $totalDonations >= $fundraising->target_amount;
+{
+    // Memanggil metode pada instans Fundraising
+    $totalDonations = $fundraising->totalReachedAmount();
+    $goalReached = $totalDonations >= $fundraising->target_amount;
 
-        $percentage= ($totalDonations / $fundraising->target_amount) * 100;
-        if($percentage > 100){
-            $percentage = 100;
-        }
-
-        return view ('admin.fundraisings.show', compact ('fundraising', 'goalReached', 'percentage', 'totalDonations'));
+    $percentage = $fundraising->target_amount > 0 ? ($totalDonations / $fundraising->target_amount) * 100 : 0;
+    if ($percentage > 100) {
+        $percentage = 100;
     }
+
+    return view('admin.fundraisings.show', compact('fundraising', 'goalReached', 'percentage', 'totalDonations'));
+}
+
+
 
     /**
      * Show the form for editing the specified resource.

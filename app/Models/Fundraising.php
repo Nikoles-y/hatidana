@@ -23,13 +23,18 @@ class Fundraising extends Model
         return $this->belongsTo(Fundraiser::class);
     }
 
-    public function donaturs(){
-        return $this->hasMany(Donatur::class)->where('is_paid', 1);
-    }
+    public function donaturs()
+{
+    return $this->hasMany(Donatur::class)->where('is_paid', 1); // Mengambil donatur yang sudah dibayar
+}
 
-    public function totalReachedAmount(){
-        return $this->donaturs()->sum('total_amount');
-    }
+
+
+    public function totalReachedAmount()
+{
+    // Menghitung total donasi dari donatur yang sudah dibayar
+    return $this->donaturs()->sum('total_amount'); // Ini benar, mengembalikan total amount
+}
 
     public function withdrawals(){
         return $this->hasMany(FundraisingWithdrawal::class);

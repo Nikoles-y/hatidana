@@ -64,11 +64,11 @@
                 <hr class="my-5">
                 <div class="flex flex-row justify-between items-center">
                     <div>
-                        <h3 class="text-indigo-950 text-xl font-bold">Rp{{ number_format($fundraising->totalDonations, 0, ',', '.') }}</h3>
+                        <h3 class="text-indigo-950 text-xl font-bold">Rp{{ number_format($fundraising->totalReachedAmount(), 0, ',', '.') }}</h3>
                         <p class="text-slate-500 text-sm">Funded</p>
                     </div>
                     <div class="w-[400px] rounded-full h-2.5 bg-slate-300">
-                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $percentage }}"></div>
+                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $percentage}}%"></div>
                     </div>
                     <div>
                         <h3 class="text-indigo-950 text-xl font-bold">Rp{{ number_format($fundraising->target_amount, 0, ',', '.') }}</h3>
