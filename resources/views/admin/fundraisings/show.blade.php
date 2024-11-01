@@ -78,10 +78,11 @@
                 </div>
                 
                 @if($goalReached)
+                @if(!$hasRequestedWithdrawal)
                 <hr class="my-5">
                 <h3 class="text-indigo-950 text-2xl font-bold">Withdraw Donations</h3>
 
-                <form method="POST" action="#" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.fundraising_withdrawal.store', $fundraising) }}" enctype="multipart/form-data">
                     @csrf
 
                     <div>
@@ -109,6 +110,7 @@
                         </button>
                     </div>
                 </form>
+                @endif
                 @endif
 
                 <hr class="my-5">

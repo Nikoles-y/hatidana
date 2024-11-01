@@ -87,13 +87,14 @@ class FundraisingController extends Controller
     // Memanggil metode pada instans Fundraising
     $totalDonations = $fundraising->totalReachedAmount();
     $goalReached = $totalDonations >= $fundraising->target_amount;
+    $hasRequestedWithdrawal = $fundraising->withdrawals()->exists();
 
     $percentage = $fundraising->target_amount > 0 ? ($totalDonations / $fundraising->target_amount) * 100 : 0;
     if ($percentage > 100) {
         $percentage = 100;
     }
 
-    return view('admin.fundraisings.show', compact('fundraising', 'goalReached', 'percentage', 'totalDonations'));
+    return view('admin.fundraisings.show', compact('hasRequestedWithdrawal','fundraising', 'goalReached', 'percentage', 'totalDonations'));
 }
 
 
