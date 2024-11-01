@@ -32,8 +32,15 @@ class FundraisingController extends Controller
         return view ('admin.fundraisings.index', compact ('fundraisings'));
     }
 
-    public function activate_fundraising()
+    public function activate_fundraising(Fundraising $fundraising)
     {
+        DB::transaction(function () use ($fundraising) {
+            $fundraising->update([
+                'is_active'=> true
+            ]);
+            
+        });
+        return redirect()->route('admin.fundraisings.show', $fundraising);
         
     }
 
