@@ -74,8 +74,11 @@
                 <h3 class="text-indigo-950 text-xl font-bold mb-5">Uang Telah Ditransfer</h3>
                 <img src="{{ Storage::url($fundraisingWithdrawal->proof) }}" alt="" class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                 <hr class="my-5">
+
+
+                @if(!$fundraisingWithdrawal->has_received)
                 <h3 class="text-indigo-950 text-xl font-bold">Have You Delivered Money?</h3>
-                <form action="#" method="POST">
+                <form action="{{ route('admin.fundraising_phases.store', $fundraisingWithdrawal->fundraising_id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div>
                         <x-input-label for="name" :value="__('Name')" />
@@ -96,6 +99,7 @@
                         Update Donation
                     </button>
                 </form>
+                @endif
                 @endif
             </div>
         </div>
