@@ -52,7 +52,8 @@ class CategoryController extends Controller
             
         });
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('front.details', ['fundraising' => $fundraising->slug]);
+
     }
 
     /**

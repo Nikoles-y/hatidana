@@ -11,7 +11,7 @@ class Donatur extends Model
     //
     use HasFactory,SoftDeletes;
     protected $fillable = [
-        'name', 'notes', 'fundraising_Id', 'total_amount', 'is_paid', 'proof',
+        'name', 'notes', 'fundraising_id', 'total_amount','phone_number', 'is_paid', 'proof',
     ];
 
     public function fundraising(){

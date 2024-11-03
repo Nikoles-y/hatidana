@@ -20,13 +20,13 @@ class StoreDonationRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            //
-            'name'=>['required', 'string', 'max:255'],
-            'phone_number'=>['required', 'string'],
-            'proof'=>['required', 'image', 'mimes:png,jpg,jpeg'],
-            'notes'=>['required', 'string', 'max:2550'],
-        ];
-    }
+{
+    return [
+        'name' => ['required', 'string', 'max:255'],
+        'phone_number' => ['required', 'string'],
+        'proof' => ['required', 'image', 'mimes:png,jpg,jpeg'],
+        'notes' => ['required', 'string', 'max:2550'],
+    ];
+}
+
 }
